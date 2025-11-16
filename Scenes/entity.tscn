@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://b7la637d8reyu"]
+
+[ext_resource type="Script" uid="uid://c77bhul3xihy7" path="res://Scripts/entity.gd" id="1_hsfu5"]
+
+[node name="Entity" type="CharacterBody2D"]
+collision_layer = 8
+script = ExtResource("1_hsfu5")
+
+[node name="AttackArea" type="Area2D" parent="."]
+unique_name_in_owner = true
+collision_layer = 4
+collision_mask = 8
+
+[connection signal="body_entered" from="AttackArea" to="." method="_on_attack_area_entered"]
