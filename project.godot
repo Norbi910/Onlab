@@ -14,6 +14,10 @@ config/name="Önlab"
 run/main_scene="uid://0y7b0t310ya6"
 config/features=PackedStringArray("4.5", "Forward Plus")
 
+[autoload]
+
+Bgm="*res://Scenes/bgm.tscn"
+
 [display]
 
 window/size/viewport_width=480
