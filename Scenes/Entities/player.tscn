@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://chpxkw26mvq3k"]
+[gd_scene load_steps=25 format=3 uid="uid://chpxkw26mvq3k"]
 
 [ext_resource type="Script" uid="uid://bscemwjnnb2is" path="res://Scripts/Entities/player.gd" id="1_vgqql"]
 [ext_resource type="Texture2D" uid="uid://ctr48nrwrqb7d" path="res://Sprites/Characters/Player/idle.png" id="2_fkybt"]
@@ -6,7 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://d0g15y676v3xf" path="res://Sprites/Characters/Player/jump.png" id="4_3smsa"]
 [ext_resource type="Texture2D" uid="uid://dlk0jh81adpkx" path="res://Sprites/Characters/Player/attack.png" id="5_8erm5"]
 [ext_resource type="PackedScene" uid="uid://bml8o3fl7yfw0" path="res://Scenes/Components/health_component.tscn" id="6_8erm5"]
+[ext_resource type="PackedScene" uid="uid://cf4duabfcn6fa" path="res://Scenes/Components/hit_flash_component.tscn" id="7_85s6f"]
 [ext_resource type="PackedScene" uid="uid://mca7y2rl04ft" path="res://Scenes/Components/hit_box_component.tscn" id="7_f1ek2"]
+[ext_resource type="Shader" uid="uid://7i1wxshtsd8b" path="res://Resources/Shaders/hit_flash.tres" id="8_85s6f"]
 [ext_resource type="PackedScene" uid="uid://bb8nlyevsjr62" path="res://Scenes/Components/attack_component.tscn" id="8_tx1dd"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fkybt"]
@@ -378,6 +380,11 @@ _data = {
 &"run": SubResource("Animation_gymyn")
 }
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_14y0q"]
+shader = ExtResource("8_85s6f")
+shader_parameter/enabled = false
+shader_parameter/ColorParameter = Color(1, 1, 1, 1)
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8erm5"]
 radius = 6.0
 height = 36.0
@@ -414,26 +421,28 @@ libraries = {
 }
 autoplay = "idle"
 
-[node name="CoyoteTimer" type="Timer" parent="."]
+[node name="Timers" type="Node" parent="."]
+
+[node name="CoyoteTimer" type="Timer" parent="Timers"]
 unique_name_in_owner = true
 wait_time = 0.1
 one_shot = true
 
-[node name="JumpBufferTimer" type="Timer" parent="."]
+[node name="JumpBufferTimer" type="Timer" parent="Timers"]
 unique_name_in_owner = true
 wait_time = 0.2
 one_shot = true
 
-[node name="FloatCooldownTimer" type="Timer" parent="."]
+[node name="FloatCooldownTimer" type="Timer" parent="Timers"]
 unique_name_in_owner = true
 one_shot = true
 
-[node name="AttackCooldownTimer" type="Timer" parent="."]
+[node name="AttackCooldownTimer" type="Timer" parent="Timers"]
 unique_name_in_owner = true
 wait_time = 0.5
 one_shot = true
 
-[node name="RespawnTimer" type="Timer" parent="."]
+[node name="RespawnTimer" type="Timer" parent="Timers"]
 unique_name_in_owner = true
 
 [node name="HealthComponent" parent="." instance=ExtResource("6_8erm5")]
@@ -442,11 +451,17 @@ visible = false
 position = Vector2(0, -15)
 MAX_HEALTH = 100.0
 
+[node name="HitFlashComponent" parent="." node_paths=PackedStringArray("sprite", "healthComponent") instance=ExtResource("7_85s6f")]
+sprite = NodePath("../Pivot/PlayerSprite")
+healthComponent = NodePath("../HealthComponent")
+
 [node name="Pivot" type="Node2D" parent="."]
 unique_name_in_owner = true
 
 [node name="PlayerSprite" type="Sprite2D" parent="Pivot"]
 unique_name_in_owner = true
+material = SubResource("ShaderMaterial_14y0q")
+position = Vector2(-1, 0)
 texture = ExtResource("2_fkybt")
 hframes = 4
 
@@ -482,7 +497,7 @@ position = Vector2(1, 11)
 shape = SubResource("CircleShape2D_8erm5")
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
-[connection signal="timeout" from="RespawnTimer" to="." method="_on_respawn_timer_timeout"]
+[connection signal="timeout" from="Timers/RespawnTimer" to="." method="_on_respawn_timer_timeout"]
 [connection signal="hp_changed" from="HealthComponent" to="." method="_on_hp_changed"]
 [connection signal="on_knockback" from="Pivot/HitBoxComponent" to="." method="_on_hit_box_knockback"]
 [connection signal="area_entered" from="Pivot/InteractionArea" to="." method="_on_interaction_area_entered"]

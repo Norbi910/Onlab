@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://b5ns3u04dt05o" path="res://Scenes/Entities/ant.tscn" id="7_daumt"]
 [ext_resource type="PackedScene" uid="uid://c5adkl5ce2slt" path="res://Scenes/Entities/npc.tscn" id="7_yupnh"]
 [ext_resource type="Texture2D" uid="uid://ha5x4hqgfsuh" path="res://Sprites/Tiles/tileset.png" id="8_hgicf"]
-[ext_resource type="PackedScene" uid="uid://c7qmlwx2rua4s" path="res://Scenes/Components/star.tscn" id="10_ydaot"]
+[ext_resource type="PackedScene" uid="uid://c7qmlwx2rua4s" path="res://Scenes/star.tscn" id="10_ydaot"]
 [ext_resource type="FontFile" uid="uid://c6lvcqnjf517l" path="res://Sprites/Fonts/MedodicaRegular.otf" id="10_yupnh"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_bo1nx"]

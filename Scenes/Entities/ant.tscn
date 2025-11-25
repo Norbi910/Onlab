@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://b5ns3u04dt05o"]
+[gd_scene load_steps=17 format=3 uid="uid://b5ns3u04dt05o"]
 
 [ext_resource type="Texture2D" uid="uid://so3xpl0df0sc" path="res://Sprites/Characters/Enemies/ant-sheet.png" id="1_3vc7g"]
 [ext_resource type="Script" uid="uid://da6mss2xnk4bn" path="res://Scripts/Entities/ant.gd" id="1_4ydk5"]
 [ext_resource type="PackedScene" uid="uid://cdnmaw550r223" path="res://Scenes/UI/hp_bar.tscn" id="3_2itxg"]
 [ext_resource type="PackedScene" uid="uid://bml8o3fl7yfw0" path="res://Scenes/Components/health_component.tscn" id="3_wtaqj"]
+[ext_resource type="Shader" uid="uid://7i1wxshtsd8b" path="res://Resources/Shaders/hit_flash.tres" id="4_jbatd"]
 [ext_resource type="PackedScene" uid="uid://mca7y2rl04ft" path="res://Scenes/Components/hit_box_component.tscn" id="4_yntpf"]
 [ext_resource type="Texture2D" uid="uid://d0bbjhesy6lg4" path="res://Sprites/Effects/enemy-deadth.png" id="5_8l72l"]
 [ext_resource type="PackedScene" uid="uid://bb8nlyevsjr62" path="res://Scenes/Components/attack_component.tscn" id="5_yntpf"]
@@ -12,6 +13,11 @@
 radius = 9.0
 height = 27.860697
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ox3j0"]
+shader = ExtResource("4_jbatd")
+shader_parameter/enabled = false
+shader_parameter/ColorParameter = Color(1, 1, 1, 1)
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_p3gn3"]
 radius = 16.0
 
@@ -19,11 +25,8 @@ radius = 16.0
 radius = 9.0
 height = 28.0
 
-[sub_resource type="Animation" id="Animation_h3mn3"]
-resource_name = "default"
-length = 0.80001
-loop_mode = 1
-step = 0.125
+[sub_resource type="Animation" id="Animation_x47ow"]
+length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -79,10 +82,10 @@ tracks/4/path = NodePath("pivot/Sprite2D:frame")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0, 1, 2, 3, 4, 5, 6, 7]
+"values": [0]
 }
 
 [sub_resource type="Animation" id="Animation_0uss2"]
@@ -152,8 +155,11 @@ tracks/4/keys = {
 }]
 }
 
-[sub_resource type="Animation" id="Animation_x47ow"]
-length = 0.001
+[sub_resource type="Animation" id="Animation_h3mn3"]
+resource_name = "default"
+length = 0.80001
+loop_mode = 1
+step = 0.125
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -209,10 +215,10 @@ tracks/4/path = NodePath("pivot/Sprite2D:frame")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0]
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_sela2"]
@@ -242,6 +248,7 @@ hp_bar = NodePath("HPBar")
 [node name="pivot" type="Node2D" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="pivot"]
+material = SubResource("ShaderMaterial_ox3j0")
 texture = ExtResource("1_3vc7g")
 offset = Vector2(3, -5)
 flip_h = true

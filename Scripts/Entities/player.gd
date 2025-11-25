@@ -20,7 +20,6 @@ var gravity: float = speed * 5
 @onready var coyote_timer: Timer = %CoyoteTimer
 @onready var jump_buffer_timer: Timer = %JumpBufferTimer
 @onready var float_cooldown_timer: Timer = %FloatCooldownTimer
-
 const PLAYER_INVENTORY = preload("res://Resources/Inventory/player_inventory.tres")
 
 signal health_changed(hp)
