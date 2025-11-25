@@ -1,7 +1,8 @@
-[gd_scene load_steps=17 format=3 uid="uid://b5ns3u04dt05o"]
+[gd_scene load_steps=18 format=3 uid="uid://b5ns3u04dt05o"]
 
 [ext_resource type="Texture2D" uid="uid://so3xpl0df0sc" path="res://Sprites/Characters/Enemies/ant-sheet.png" id="1_3vc7g"]
 [ext_resource type="Script" uid="uid://da6mss2xnk4bn" path="res://Scripts/Entities/ant.gd" id="1_4ydk5"]
+[ext_resource type="PackedScene" uid="uid://cf4duabfcn6fa" path="res://Scenes/Components/hit_flash_component.tscn" id="2_ox3j0"]
 [ext_resource type="PackedScene" uid="uid://cdnmaw550r223" path="res://Scenes/UI/hp_bar.tscn" id="3_2itxg"]
 [ext_resource type="PackedScene" uid="uid://bml8o3fl7yfw0" path="res://Scenes/Components/health_component.tscn" id="3_wtaqj"]
 [ext_resource type="Shader" uid="uid://7i1wxshtsd8b" path="res://Resources/Shaders/hit_flash.tres" id="4_jbatd"]
@@ -237,6 +238,10 @@ speed = 50.0
 rotation = 1.5707964
 scale = Vector2(1, 1.005)
 shape = SubResource("CapsuleShape2D_ae3vd")
+
+[node name="HitFlashComponent" parent="." node_paths=PackedStringArray("sprite", "healthComponent") instance=ExtResource("2_ox3j0")]
+sprite = NodePath("../pivot/Sprite2D")
+healthComponent = NodePath("../HealthComponent")
 
 [node name="HealthComponent" parent="." node_paths=PackedStringArray("hp_bar") instance=ExtResource("3_wtaqj")]
 position = Vector2(0, -16)

@@ -20,6 +20,7 @@ var gravity: float = speed * 5
 @onready var coyote_timer: Timer = %CoyoteTimer
 @onready var jump_buffer_timer: Timer = %JumpBufferTimer
 @onready var float_cooldown_timer: Timer = %FloatCooldownTimer
+@onready var hit_slow_timer: Timer = %HitSlowTimer
 const PLAYER_INVENTORY = preload("res://Resources/Inventory/player_inventory.tres")
 
 signal health_changed(hp)
@@ -177,3 +178,12 @@ func _on_interaction_area_entered(area: Area2D) -> void:
 		var item = area.get_parent().item
 		PLAYER_INVENTORY.items.push_back(item)
 		area.get_parent().queue_free()
+
+
+func _on_attack_component_damage_dealt() -> void:
+	Engine.time_scale = 0.5
+	hit_slow_timer.start()
+
+
+func _on_hit_slow_timer_timeout() -> void:
+	Engine.time_scale = 1
