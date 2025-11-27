@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=4 uid="uid://0y7b0t310ya6"]
+[gd_scene load_steps=18 format=4 uid="uid://0y7b0t310ya6"]
 
 [ext_resource type="Texture2D" uid="uid://bmtekvskkcf5i" path="res://Sprites/BackGround/sky.png" id="1_y27js"]
 [ext_resource type="Texture2D" uid="uid://dxorqnwdr6kwv" path="res://Sprites/BackGround/clouds.png" id="2_yupnh"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://chpxkw26mvq3k" path="res://Scenes/Entities/player.tscn" id="5_c6ica"]
 [ext_resource type="PackedScene" uid="uid://x63lcjbcaif2" path="res://Scenes/UI/hud.tscn" id="6_y2mi2"]
 [ext_resource type="PackedScene" uid="uid://b5ns3u04dt05o" path="res://Scenes/Entities/ant.tscn" id="7_daumt"]
+[ext_resource type="PackedScene" uid="uid://qh4krg2nlrhg" path="res://Scenes/UI/camera.tscn" id="7_qjc0w"]
 [ext_resource type="PackedScene" uid="uid://c5adkl5ce2slt" path="res://Scenes/Entities/npc.tscn" id="7_yupnh"]
 [ext_resource type="Texture2D" uid="uid://ha5x4hqgfsuh" path="res://Sprites/Tiles/tileset.png" id="8_hgicf"]
 [ext_resource type="PackedScene" uid="uid://bs1jsgcfbqxsd" path="res://Scenes/Entities/crow.tscn" id="8_ydaot"]
@@ -360,7 +361,7 @@ scroll_scale = Vector2(0.25, 0.1)
 scroll_offset = Vector2(-780, 55)
 repeat_size = Vector2(459, 0)
 autoscroll = Vector2(5.615, 0)
-repeat_times = 5
+repeat_times = 13
 
 [node name="Cloud" type="Sprite2D" parent="BackGround/Parallax2D2"]
 texture = ExtResource("2_yupnh")
@@ -385,18 +386,34 @@ offset_bottom = 152.0
 
 [node name="MoveLabel" type="Label" parent="Labels"]
 layout_mode = 0
-offset_left = 134.0
-offset_top = -251.0
-offset_right = 270.0
-offset_bottom = -178.0
+offset_left = 137.0
+offset_top = -265.0
+offset_right = 282.0
+offset_bottom = -173.0
 theme_override_colors/font_shadow_color = Color(0.5949837, 0.15616107, 0.03471772, 0)
 theme_override_constants/shadow_offset_x = 3
 theme_override_constants/shadow_offset_y = 3
 theme_override_constants/outline_size = 4
 theme_override_fonts/font = ExtResource("10_yupnh")
-text = "Use WASD or the Arrow Keys to move
+text = "Use A and D or the
+Left/Right Arrow Keys to move
 Space to Jump
 "
+autowrap_mode = 3
+
+[node name="MoveLabel2" type="Label" parent="Labels"]
+layout_mode = 0
+offset_left = 1064.0
+offset_top = -294.0
+offset_right = 1180.0
+offset_bottom = -221.0
+theme_override_colors/font_shadow_color = Color(0.5949837, 0.15616107, 0.03471772, 0)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("10_yupnh")
+text = "You can also nudge the camera 
+up/down with W/S"
 autowrap_mode = 3
 
 [node name="GlideLabel" type="Label" parent="Labels"]
@@ -445,26 +462,19 @@ to interact"
 horizontal_alignment = 1
 autowrap_mode = 3
 
+[node name="HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("6_y2mi2")]
+player = NodePath("../Player")
+
 [node name="Player" parent="." instance=ExtResource("5_c6ica")]
 position = Vector2(21, -152)
 
-[node name="Camera2D" type="Camera2D" parent="Player"]
-position = Vector2(0, 2)
-position_smoothing_enabled = true
-drag_horizontal_enabled = true
-drag_vertical_enabled = true
-drag_left_margin = 0.05
-drag_top_margin = 0.05
-drag_right_margin = 0.05
-drag_bottom_margin = 0.05
-
-[node name="HUD" parent="Player/Camera2D" node_paths=PackedStringArray("player") instance=ExtResource("6_y2mi2")]
-player = NodePath("../..")
+[node name="Camera" parent="Player" instance=ExtResource("7_qjc0w")]
 
 [node name="Enemies" type="Node2D" parent="."]
 position = Vector2(441, -33)
 
 [node name="Ant" parent="Enemies" instance=ExtResource("7_daumt")]
+position = Vector2(-76, -1)
 
 [node name="Ant2" parent="Enemies" instance=ExtResource("7_daumt")]
 position = Vector2(306, 207)

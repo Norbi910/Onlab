@@ -5,11 +5,13 @@ extends Area2D
 
 signal damage_dealt
 
-func _on_area_entered(area: Area2D) -> void:
-	if area is not HitboxComponent:
+func _process(_delta: float) -> void:
+	if not has_overlapping_areas():
 		return
-	var hitbox: HitboxComponent = area
-	var knockback_direction: Vector2 = (area.global_position - global_position).normalized()
-	hitbox.damage(ATTACK_DAMAGE, knockback_direction)
-	damage_dealt.emit()
-	
+	for area: Area2D in get_overlapping_areas():
+		if area is not HitboxComponent:
+			continue
+		var hitbox: HitboxComponent = area
+		var knockback_direction: Vector2 = (area.global_position - global_position).normalized()
+		if hitbox.damage(ATTACK_DAMAGE, knockback_direction):
+			damage_dealt.emit()

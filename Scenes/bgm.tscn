@@ -5,3 +5,4 @@
 [node name="bgm" type="AudioStreamPlayer"]
 stream = ExtResource("1_2kasm")
 autoplay = true
+parameters/looping = true

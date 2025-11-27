@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bml8o3fl7yfw0" path="res://Scenes/Components/health_component.tscn" id="6_8erm5"]
 [ext_resource type="PackedScene" uid="uid://cf4duabfcn6fa" path="res://Scenes/Components/hit_flash_component.tscn" id="7_85s6f"]
 [ext_resource type="PackedScene" uid="uid://mca7y2rl04ft" path="res://Scenes/Components/hit_box_component.tscn" id="7_f1ek2"]
-[ext_resource type="Shader" uid="uid://7i1wxshtsd8b" path="res://Resources/Shaders/hit_flash.tres" id="8_85s6f"]
+[ext_resource type="Shader" uid="uid://dfbcw0y4ieh7m" path="res://Resources/Shaders/better_flash.gdshader" id="8_85s6f"]
 [ext_resource type="PackedScene" uid="uid://bb8nlyevsjr62" path="res://Scenes/Components/attack_component.tscn" id="8_tx1dd"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fkybt"]
@@ -383,8 +383,8 @@ _data = {
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_14y0q"]
 resource_local_to_scene = true
 shader = ExtResource("8_85s6f")
-shader_parameter/enabled = false
-shader_parameter/ColorParameter = Color(1, 1, 1, 1)
+shader_parameter/color_parameter = Color(1, 1, 1, 1)
+shader_parameter/enabled = true
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8erm5"]
 radius = 6.0
@@ -481,11 +481,12 @@ shape = SubResource("CapsuleShape2D_f1ek2")
 disabled = true
 debug_color = Color(0.9113462, 0.21197182, 0.52477556, 0.41960785)
 
-[node name="HitBoxComponent" parent="Pivot" node_paths=PackedStringArray("health_component") instance=ExtResource("7_f1ek2")]
+[node name="HitBoxComponent" parent="Pivot" node_paths=PackedStringArray("health_component", "hit_flash") instance=ExtResource("7_f1ek2")]
 collision_layer = 2
 collision_mask = 0
 health_component = NodePath("../../HealthComponent")
 invincibility_time = 1.0
+hit_flash = NodePath("../../HitFlashComponent")
 
 [node name="Hitbox" type="CollisionShape2D" parent="Pivot/HitBoxComponent"]
 position = Vector2(0, 12)

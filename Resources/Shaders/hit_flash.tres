@@ -1,6 +1,7 @@
 [gd_resource type="VisualShader" load_steps=5 format=3 uid="uid://7i1wxshtsd8b"]
 
 [sub_resource type="VisualShaderNodeColorParameter" id="VisualShaderNodeColorParameter_br1xx"]
+expanded_output_ports = [0]
 parameter_name = "ColorParameter"
 default_value_enabled = true
 
@@ -65,11 +66,11 @@ flags/light_only = false
 nodes/vertex/0/position = Vector2(460, 200)
 nodes/fragment/0/position = Vector2(420, 240)
 nodes/fragment/2/node = SubResource("VisualShaderNodeColorParameter_br1xx")
-nodes/fragment/2/position = Vector2(-180, 240)
+nodes/fragment/2/position = Vector2(-200, 120)
 nodes/fragment/3/node = SubResource("VisualShaderNodeBooleanParameter_wrnpd")
 nodes/fragment/3/position = Vector2(-180, -20)
 nodes/fragment/4/node = SubResource("VisualShaderNodeIf_wmkyr")
 nodes/fragment/4/position = Vector2(180, 60)
 nodes/fragment/5/node = SubResource("VisualShaderNodeInput_7725y")
 nodes/fragment/5/position = Vector2(-200, 500)
-nodes/fragment/connections = PackedInt32Array(4, 0, 0, 0, 3, 0, 4, 0, 2, 0, 4, 3, 5, 0, 4, 4, 5, 0, 4, 5)
+nodes/fragment/connections = PackedInt32Array(4, 0, 0, 0, 3, 0, 4, 0, 5, 0, 4, 4, 5, 0, 4, 5, 2, 0, 4, 3)
