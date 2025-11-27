@@ -3,19 +3,24 @@ extends CharacterBody2D
 
 # Movement variables
 @export var speed: float= 150.0
-@export var acceleration: float = 10.0
-@export var deacceleration: float = 20.0
-@export var float_strength: float = 7.0
-@export var down_gravity_factor: float = 2.0
+@export var acceleration: float = 20.0
+@export var deacceleration: float = 10.0
+var direction: float
+
+@export var jump_height: float = 128.0
+@export var jump_time_to_peak: float = 0.5
+@export var jump_fall_time: float = 0.4
+
+var jump_velocity: float = - 2.0 * jump_height / jump_time_to_peak
+var jump_gravity: float = 2.0 * jump_height / jump_time_to_peak / jump_time_to_peak
+var fall_gravity: float = 2.0 * jump_height / jump_fall_time / jump_fall_time
+
 @export var variable_jump_height_strength: float = 0.4
-
-var jump_velocity: float = -speed * 3
-var gravity: float = speed * 5
-
+@export var float_strength: float = 10.0
 
 # Imports
 @onready var sprite: Sprite2D = %PlayerSprite
-@onready var animationPlayer: AnimationPlayer = %AnimationPlayer
+@onready var animation_player: AnimationPlayer = %AnimationPlayer
 @onready var attack_cooldown_timer: Timer = %AttackCooldownTimer
 @onready var coyote_timer: Timer = %CoyoteTimer
 @onready var jump_buffer_timer: Timer = %JumpBufferTimer
@@ -40,7 +45,7 @@ func _physics_process(delta: float) -> void:
 	_update_state()
 	_update_animation()
 	move_and_slide()
-	print(velocity.y)
+	#print(velocity.y)
 	
 func _handle_input():
 	if Input.is_action_just_pressed("attack") and attack_cooldown_timer.is_stopped():
@@ -59,14 +64,24 @@ func _handle_input():
 		_interact()
 	
 	# Get the input direction and handle the movement/deceleration.
-	var direction := Input.get_axis("move_left", "move_right")
+	direction = Input.get_axis("move_left", "move_right")
+	
+			
+		
+		
+func _update_movement(delta: float):
+	#velocity.x = direction * speed
+
+	# kiting
+	if sign(direction) != sign(velocity.x):
+		velocity.x = 0
+
 	if direction:
 		velocity.x = move_toward(velocity.x, direction * speed, acceleration ) # accelerate
 	else:
 		velocity.x = move_toward(velocity.x, 0, deacceleration ) # deAccelerate
-		
-		
-func _update_movement(delta: float):
+
+	
 	# Able to jump if player is on the ground (coyote timer included) or jump buffered
 	if (is_on_floor() or coyote_timer.time_left>0) and jump_buffer_timer.time_left > 0:
 		current_state = State.JUMP
@@ -75,11 +90,11 @@ func _update_movement(delta: float):
 		velocity.y += jump_velocity
 	
 	if current_state == State.JUMP:
-		velocity.y += delta * gravity
+		velocity.y += delta * jump_gravity
 	elif current_state == State.FLOAT:
-		velocity.y += delta * gravity / float_strength
+		velocity.y += delta * fall_gravity / float_strength
 	else: 
-		velocity.y += delta * gravity * down_gravity_factor # higher gravity when falling
+		velocity.y += delta * fall_gravity
 
 
 func _update_state():
@@ -121,21 +136,21 @@ func _update_state():
 
 func _update_animation() -> void:
 	if is_attacking:
-		animationPlayer.play("attack")
+		animation_player.play("attack")
 	else:
 		if velocity.x != 0:
 			%Pivot.scale.x = sign(velocity.x)
 						
 		match current_state:
-			State.IDLE: animationPlayer.play("idle")
-			State.RUN: animationPlayer.play("run")
-			State.JUMP: animationPlayer.play("jump")
-			State.FALL: animationPlayer.play("fall")
-			State.FLOAT: animationPlayer.play("float")
+			State.IDLE: animation_player.play("idle")
+			State.RUN: animation_player.play("run")
+			State.JUMP: animation_player.play("jump")
+			State.FALL: animation_player.play("fall")
+			State.FLOAT: animation_player.play("float")
 
 
 func _die():
-	$PlayerCollision.queue_free()
+	sprite.visible = false
 	print("YOU DIED")
 	Engine.time_scale = 0.5
 	%RespawnTimer.start()
@@ -151,7 +166,7 @@ func get_max_health() -> float:
 	var healthComponent: HealthComponent = %HealthComponent
 	if healthComponent:
 		return healthComponent.MAX_HEALTH
-	return 0
+	return -1
 
 	
 
@@ -161,6 +176,7 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 
 func _on_respawn_timer_timeout() -> void:
 	Engine.time_scale = 1
+	sprite.visible = true
 	get_tree().reload_current_scene()
 
 func _on_hit_box_knockback(force: Vector2) -> void:

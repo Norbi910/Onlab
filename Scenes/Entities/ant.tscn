@@ -15,6 +15,7 @@ radius = 9.0
 height = 27.860697
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ox3j0"]
+resource_local_to_scene = true
 shader = ExtResource("4_jbatd")
 shader_parameter/enabled = false
 shader_parameter/ColorParameter = Color(1, 1, 1, 1)

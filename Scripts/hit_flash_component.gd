@@ -8,7 +8,7 @@ func _ready() -> void:
 	if healthComponent:
 		healthComponent.connect("hp_changed", flash)
 
-func flash(dmg: float):
+func flash(_dmg: float):
 	if not sprite: 
 		return
 	sprite.material.set_shader_parameter("enabled", true)
