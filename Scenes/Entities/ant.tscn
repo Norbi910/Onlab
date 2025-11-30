@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bml8o3fl7yfw0" path="res://Scenes/Components/health_component.tscn" id="3_wtaqj"]
 [ext_resource type="Shader" uid="uid://7i1wxshtsd8b" path="res://Resources/Shaders/hit_flash.tres" id="4_jbatd"]
 [ext_resource type="PackedScene" uid="uid://mca7y2rl04ft" path="res://Scenes/Components/hit_box_component.tscn" id="4_yntpf"]
-[ext_resource type="Texture2D" uid="uid://d0bbjhesy6lg4" path="res://Sprites/Effects/enemy-deadth.png" id="5_8l72l"]
+[ext_resource type="Texture2D" uid="uid://d0bbjhesy6lg4" path="res://Sprites/Effects/enemy-death.png" id="5_8l72l"]
 [ext_resource type="PackedScene" uid="uid://bb8nlyevsjr62" path="res://Scenes/Components/attack_component.tscn" id="5_yntpf"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ae3vd"]
@@ -267,6 +267,7 @@ target_position = Vector2(0, 20)
 
 [node name="RayCastAhead" type="RayCast2D" parent="pivot"]
 unique_name_in_owner = true
+position = Vector2(0, 5)
 target_position = Vector2(21, 0)
 
 [node name="HitBoxComponent" parent="pivot" node_paths=PackedStringArray("health_component") instance=ExtResource("4_yntpf")]

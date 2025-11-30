@@ -110,7 +110,10 @@ func _update_state():
 				coyote_timer.start()
 				
 		State.JUMP when velocity.y > 0:
-			current_state = State.FALL
+			if is_floating:
+				current_state = State.FLOAT
+			else:
+				current_state = State.FALL
 			
 		State.FALL:
 			if is_on_floor():
@@ -150,6 +153,7 @@ func _update_animation() -> void:
 
 
 func _die():
+	PLAYER_INVENTORY.reset()
 	sprite.visible = false
 	print("YOU DIED")
 	Engine.time_scale = 0.5
@@ -191,9 +195,11 @@ func _on_hp_changed(hp: float) -> void:
 
 func _on_interaction_area_entered(area: Area2D) -> void:
 	if area.is_in_group("pickup"):
-		var item = area.get_parent().item
-		PLAYER_INVENTORY.items.push_back(item)
-		area.get_parent().queue_free()
+		var item: Item = area.get_parent()
+		PLAYER_INVENTORY.items.push_back(item.item)
+		if item.has_method("pickup"):
+			item.pickup()
+		else: queue_free()
 
 
 func _on_attack_component_damage_dealt() -> void:

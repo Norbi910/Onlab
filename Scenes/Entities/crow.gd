@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends Enemy
 
 var target: Area2D
 var direction: Vector2
@@ -45,6 +45,7 @@ func _on_health_component_hp_changed(hp: float) -> void:
 		_die()
 
 func _die():
+	dead.emit()
 	is_alive = false
 	$HealthComponent.queue_free()
 	$HitBoxComponent.queue_free()

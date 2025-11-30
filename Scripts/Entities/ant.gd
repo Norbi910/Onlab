@@ -1,6 +1,10 @@
-extends CharacterBody2D
+extends Enemy
+
 
 @export var speed: float = 20
+
+@export var max_hp: float
+@export var damage: float
 
 var direction: int = 1
 var is_alive: bool = true
@@ -9,6 +13,14 @@ var is_alive: bool = true
 @onready var sprite: Sprite2D = $pivot/Sprite2D
 @onready var pivot: Node2D = $pivot
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var health_component: HealthComponent = $HealthComponent
+@onready var attack_component: AttackComponent = $pivot/AttackComponent
+
+func _ready() -> void:
+	if max_hp:
+		health_component.MAX_HEALTH = max_hp
+	if damage:
+		attack_component.ATTACK_DAMAGE = damage
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(_delta: float) -> void:
@@ -32,6 +44,7 @@ func _on_health_changed(hp: float) -> void:
 		_die()
 
 func _die():
+	dead.emit()
 	is_alive = false
 	$HealthComponent.queue_free()
 	$pivot/HitBoxComponent.queue_free()

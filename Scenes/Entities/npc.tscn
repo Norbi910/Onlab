@@ -59,9 +59,9 @@ shape = SubResource("CircleShape2D_2xkex")
 
 [node name="TextBox" type="Label" parent="."]
 offset_left = -79.0
-offset_top = -32.0
+offset_top = -38.0
 offset_right = 79.0
-offset_bottom = -16.0
+offset_bottom = -22.0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 2

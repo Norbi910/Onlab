@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dtk8fcdwol0ed" path="res://Sprites/Characters/Enemies/crow-all.png" id="5_nuoyh"]
 [ext_resource type="PackedScene" uid="uid://mca7y2rl04ft" path="res://Scenes/Components/hit_box_component.tscn" id="6_4s38x"]
 [ext_resource type="PackedScene" uid="uid://bb8nlyevsjr62" path="res://Scenes/Components/attack_component.tscn" id="7_mpace"]
-[ext_resource type="Texture2D" uid="uid://d0bbjhesy6lg4" path="res://Sprites/Effects/enemy-deadth.png" id="9_6y3jp"]
+[ext_resource type="Texture2D" uid="uid://d0bbjhesy6lg4" path="res://Sprites/Effects/enemy-death.png" id="9_6y3jp"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_okm6x"]
 radius = 16.0

@@ -6,6 +6,8 @@ const PLAYER_INVENTORY = preload("uid://bvyijoa5sha6v")
 enum QuestState {NONE, ACCEPTED, COMPLETED}
 @export var current_state: QuestState = QuestState.NONE
 
+signal win
+
 func _ready() -> void:
 	text_box.visible = false
 
@@ -22,7 +24,8 @@ func talk():
 	if current_state == QuestState.NONE and text_box.lines_skipped == text_box.get_line_count():
 		current_state = QuestState.ACCEPTED
 		
-
+	if current_state == QuestState.COMPLETED and text_box.lines_skipped == text_box.get_line_count():
+		win.emit()
 	text_box.lines_skipped %= text_box.get_line_count()
 	
 func updateDialogue():
@@ -33,7 +36,8 @@ My name is bun!
 Nice to meet you!"
 		QuestState.ACCEPTED:
 			text_box.text = "Bring me a Star and Come back! 
-You'll find it East of here!"
+You'll find it East of here!
+It's guarded by a HUGE ANT"
 		QuestState.COMPLETED:
 			text_box.text = "Thanks for bringing me this star!
 So shinyy!
